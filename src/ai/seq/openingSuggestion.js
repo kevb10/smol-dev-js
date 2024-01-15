@@ -28,7 +28,7 @@ module.exports = async function openingSuggestion() {
 	// Lets ask, we opt for the economical 3.5-turbo when possible
 	let res = await getChatCompletion(promptArr.join("\n"), {
 		stream: true,
-		model: "economical"
+		model: "gpt-4"
 	});
 	
 	// Return the completion

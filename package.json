@@ -16,7 +16,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@js-util/config-loader": "^1.2.7",
-    "ai-bridge": "^1.2.8",
+    "ai-bridge": "git+https://github.com/kevb10/ai-bridge.git",
     "chalk": "^4.1.2",
     "glob": "^10.2.4",
     "inquirer": "^9.2.3",

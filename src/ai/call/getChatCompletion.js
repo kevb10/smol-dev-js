@@ -17,19 +17,16 @@ module.exports = async function getChatCompletion(messages, promptOpts = {}, str
 	let model = promptOpts.model;
 
 	// And decide what we should use
-	if( config.config?.provider == "anthropic" ) {
+	if (config.config?.provider == "anthropic") {
 		model = "claude-2"
 		promptOpts.total_tokens = 120 * 1000;
 	} else {
-		if( model == "gpt-4" || model == "smart" ) {
-			if( config.gpt4_32k ) {
-				model = "gpt-4-32k";
-			} else {
-				model = "gpt-4";
-			}
-		} else if( model == "economical" ) {
-			model = "gpt-4e"
-		}	
+		if (model == "gpt-4" || model == "smart") {
+			// if (config.gpt4_32k) {
+			// 	model = "gpt-4-32k";
+			// }
+			model = "gpt-4-1106-preview"
+		}
 		promptOpts.total_tokens = 4 * 1000;
 	}
 
@@ -46,6 +43,26 @@ module.exports = async function getChatCompletion(messages, promptOpts = {}, str
 	// 	}
 	// }
 
-	// And execute
-	return await aiBridge.getChatCompletion(messages, promptOpts, streamListener, cacheGrp, tempKey);
+	try {
+		// Attempt to get completion with the default model
+		return await aiBridge.getChatCompletion(messages, promptOpts, streamListener, cacheGrp, tempKey);
+	} catch (error) {
+		// If error is related to token limit, switch to gpt-4-32k and retry
+		if (isTokenLimitError(error)) {
+			console.log("Token limit exceeded, switching to gpt-4-32k", error)
+			promptOpts.model = "gpt-4-32k";
+			promptOpts.total_tokens = 32000; // Adjust token limit for the new model
+			return await aiBridge.getChatCompletion(messages, promptOpts, streamListener, cacheGrp, tempKey);
+		} else {
+			// If the error is not related to token limit, rethrow it
+			throw error;
+		}
+	}
+}
+
+// Helper function to determine if the error is due to token limit
+function isTokenLimitError(error) {
+	// Implement logic to determine if the error is due to exceeding token limit.
+	// This is a placeholder and needs to be tailored to the specific error format/response you receive.
+	return error.message?.includes("token limit") || error.message?.includes("Prompt is larger"); // Example condition
 }
