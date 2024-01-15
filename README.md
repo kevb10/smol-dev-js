@@ -1,26 +1,30 @@
 # Smol-Dev-JS
 
-You own personal AI dev, which you can direct development in a collaborative back and forth experience.
+Your own personal AI dev, which you can direct development in a collaborative back and forth experience.
 Think of it as pair-programming, via the command line.
 
-Written entire in JS (no python), and is able to make both "smol-er" changes (you can ask it to change a few lines or a file or two), 
-or "big-ger" changes (ie. generate a full project from specs for you) - the choice is urs.
+Written entirely in JS (no Python), and is able to make both "smol-er" changes (you can ask it to change a few lines or a file or two),
+or "big-ger" changes (i.e., generate a full project from specs for you) - the choice is yours.
 
 This switches your role from a developer, to a "senior developer" - where you are instructing your junior developers what to do (and hope they get it right).
 
-For best results: Generally treat the AI like a junior developer who joined the project on day 0, and is still learning the ropes. And you are the senior developer who is teaching it - and making small incremental changes - and you will get better result as you prompt your way in a loop.
+For best results: Generally treat the AI like a junior developer who joined the project on day 0, and is still learning the ropes. And you are the senior developer who is teaching it - and making small incremental changes - and you will get better results as you prompt your way in a loop.
 
 > Not no code, not low code, but some third thing.
 
 Allowing you to focus on ~~sword fighting~~ the big picture, while the AI does the ~~button mashing~~ coding for you.
 
 <p align="center">
-	<img height=200 src="https://pbs.twimg.com/media/FwEzVCcaMAE7t4h?format=jpg&name=large" />
+ <img height=200 src="https://pbs.twimg.com/media/FwEzVCcaMAE7t4h?format=jpg&name=large" />
 </p>
 
-Additionally, because the changes are small, incremental, and runs in a tight loop you are in full control of it. You do not need to worry about it going out of control ~~like some autonomous agents~~. Allowing you to review each commit, and revert them or make changes yourself if needed.
+Additionally, because the changes are small, incremental, and run in a tight loop, you are in full control of it. You do not need to worry about it going out of control. Allowing you to review each commit, and revert them or make changes yourself if needed.
 
-> Quoting the original smol-dev : does not end the world or overpromise AGI. instead of making and maintaining specific, rigid, one-shot starters, like create-react-app, or create-nextjs-app, this is basically [`create-anything-app`](https://news.ycombinator.com/item?id=35942352) where you develop your scaffolding prompt in a tight loop with your smol dev.
+> Quoting the original smol-dev: does not end the world or overpromise AGI. Instead of making and maintaining specific, rigid, one-shot starters, like create-react-app, or create-nextjs-app, this is basically [`create-anything-app`](https://news.ycombinator.com/item?id=35942352) where you develop your scaffolding prompt in a tight loop with your smol dev.
+
+# Getting Started
+
+To get started with Smol-Dev-JS, please refer to our [Run Guide](docs/RUN_GUIDE.md) for detailed step-by-step instructions tailored for junior engineers.
 
 # Commands & Setup
 
@@ -33,7 +37,7 @@ sudo n 18
 
 ## smol-dev-js setup
 
-**Reminder: Do check on your openAI dashboard if you have GPT4 access**
+**Reminder: Do check on your OpenAI dashboard if you have GPT-4 access**
 
 Install via NPM
 
@@ -41,7 +45,7 @@ Install via NPM
 npm install -g smol-dev-js
 ```
 
-Either start a new JS project, or go to an existing nodejs project, run the setup function, and follow the process
+Either start a new JS project, or go to an existing Node.js project, run the setup function, and follow the process
 
 ```bash
 cd my-js-project
@@ -50,9 +54,9 @@ smol-dev-js setup
 
 ![smol-dev-setup](https://raw.githubusercontent.com/PicoCreator/smol-dev-js/main/docs/smol-dev-setup.gif)
 
-This will ask for your API keys, and setup the `.smol-dev-js` folder which it will use internally for you
+This will ask for your API keys, and set up the `.smol-dev-js` folder which it will use internally for you.
 
-> It is highly recommended to use anthropic claude, if you have the API key, as its so much faster and more reliable then openAI as of now for this use case. For openAI this uses gpt4-8k for the heavy lifting, while downgrading to gpt3.5 for some smol-er task
+> It is highly recommended to use Anthropic Claude, if you have the API key, as it's so much faster and more reliable than OpenAI as of now for this use case. For OpenAI, this uses gpt4-8k for the heavy lifting, while downgrading to gpt3.5 for some smaller tasks.
 
 ## smol-dev-js prompt
 
@@ -67,34 +71,36 @@ smol-dev-js prompt
 
 Once everything is generated, review the code and begin a loop where you ...
 
-> engineering with prompts, rather than prompt engineering
+> engineer with prompts, rather than prompt engineering
 
-Found an error? paste it in and let the AI suggest a fix for you. Or tell it what to do to fix it.
+Found an error? Paste it in and let the AI suggest a fix for you. Or tell it what to do to fix it.
 
-Loop until happiness is attained. Or that you find the AI being unhelpful, and take back control.
+Loop until happiness is attained. Or until you find the AI being unhelpful, and take back control.
 
 ## smol-dev-js spec2code
 
-Got all your project specifications file ready? Run th spec2code, and let the smol-dev AI generate it for you.
+Got all your project specifications file ready? Run the spec2code, and let the smol-dev AI generate it for you.
 
-The general format of the spec folder should be
-- `README.md` (high level spec)
-- `NOTES.md` (any more point form feedback/instruction to pass to the AI globally, which may might not make sense in the spec)
+The general format of the spec folder should be:
+
+- `README.md` (high-level spec)
+- `NOTES.md` (any more point-form feedback/instruction to pass to the AI globally, which may not make sense in the spec)
 - `<folder>/<filename>.<type>.md` (spec for a specific file)
 
-> You will need the spec folder to be configured
+> You will need the spec folder to be configured.
 
 ## smol-dev-js code2spec
 
-Lazy to write specs to an existing codebase from scratch, let the smol-dev AI generate a draft for you.
+Lazy to write specs for an existing codebase from scratch, let the smol-dev AI generate a draft for you.
 
-> You will need the spec folder to be configured
+> You will need the spec folder to be configured.
 
 ## Want to customize the settings further?
 
-After generating the config, you can look into `.smol-dev-js/config` folder for various settings, including
+After generating the config, you can look into the `.smol-dev-js/config` folder for various settings, including:
+
 - local cache settings
-- caching with mongoDB (you can use the free tier)
+- caching with MongoDB (you can use the free tier)
 - rate limits
 
 # Example Usage
