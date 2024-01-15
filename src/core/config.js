@@ -1,67 +1,61 @@
-const fs = require("fs")
-const path = require("path")
-const ConfigLoader = require("@js-util/config-loader")
+const fs = require("fs");
+const path = require("path");
+const ConfigLoader = require("@js-util/config-loader");
 
-//
-// Load the various config files (if found),
-// along with the various default value fallbacks
-//
+// This script is responsible for loading and managing the configuration for the smol AI developer tool.
+// It checks for the existence of a configuration directory and loads configuration files accordingly,
+// providing default values where necessary.
+
+// Define the current working directory and the expected configuration directory path.
 const cwd = process.cwd();
 const configDir = path.join(cwd, ".smol-dev-js/config/");
 
-// Check if it exists
-let configDirExists = false;
-if( fs.existsSync(configDir) ) {
-	configDirExists = true;
-}
+// Check if the configuration directory exists and set a flag accordingly.
+let configDirExists = fs.existsSync(configDir);
 
+// Instantiate a new ConfigLoader with the appropriate directories and default configuration.
 const config = new ConfigLoader({
-	configDirList: (configDirExists? [ path.join(cwd, ".smol-dev-js/config/") ] : [] ),
+	configDirList: configDirExists ? [configDir] : [],
 	fileList: [],
 	default: {
-		// Main ai-dev config
-		// ---
-		config: {
+		// Default configuration for the main AI developer tool.
+		config: {},
 
-		},
-
-		// The following config settings is for the ai-bridge module
-		// ---
+		// Default configuration settings for the ai-bridge module.
 		aibridge: {
-
-			// openAI key
+			// Placeholder for the OpenAI API key.
 			provider: {
-				// openai: "<CHANGE TO YOUR OPENAI KEY>"
+				// Replace with your actual OpenAI API key.
+				// openai: "<YOUR_OPENAI_KEY>"
 			},
 			
-			// // Number of provider requests that can occur concurrently
+			// Optional rate limiting for provider requests.
 			// providerRateLimit: 1,
 			
-			// Latency delay between request, to be used with rate limit, to further "tune down"
+			// Optional latency delay between requests for rate limiting.
 			providerLatencyAdd: 0,
 			
-			// Caching controls
-			//--------------------
-			"cache": {
-				// Local dir, to store multiple jsonl files, which is used for caching
-				"localJsonlDir": {
-					"enable": true,
-					"path": "./.smol-dev-js/ai-cache"
+			// Configuration for caching mechanisms.
+			cache: {
+				// Local directory caching using JSONL files.
+				localJsonlDir: {
+					enable: true,
+					path: "./.smol-dev-js/ai-cache"
 				},
 				
-				// MongoDB connection, to store and query cached completion request
-				"mongoDB": {
-					"enable": false,
-					"url": "<CHANGE TO YOUR RESPECTIVE MONGODB URL>",
+				// MongoDB caching for completion requests.
+				mongoDB: {
+					enable: false,
+					url: "<YOUR_MONGODB_URL>",
 				},
 				
-				// Individually enable prompt or embedding caching
-				"promptCache": true,
-				"embeddingCache": true
+				// Toggle caching for prompts and embeddings.
+				promptCache: true,
+				embeddingCache: true
 			}
 		}
 	}
 });
 
-// Export the config
+// Export the configuration object for use in other parts of the application.
 module.exports = config;

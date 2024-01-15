@@ -2,30 +2,32 @@
 const midSegmentCharset = "~-=+!@#$%&*:|".split('');
 
 /**
- * Given the input string, derive a sutible 'block' wrapper line to use.
- * This is unique, and not used - as a seperator.
+ * Given the input string, derive a suitable 'block' wrapper line to use.
+ * This is unique, and not used - as a separator.
  * 
- * @param {String} data
+ * @param {String} data - The string to be wrapped in a block.
+ * @returns {String} - A unique block wrap line that does not exist in the input data.
+ * @throws {Error} - Throws an error if no valid block wrap line can be found.
  */
 module.exports = function getBlockWrapLine(data) {
 	// Trim the data provided
 	data = data.trim();
 
-	// Use markdown if possible
-	if( data.indexOf("```") < 0 ) {
-		return '```'
+	// Use markdown code fence if possible
+	if (!data.includes("```")) {
+		return '```';
 	}
 
-	// Ok markdown failed, lets find the more complicated version
-	for( const midChar of midSegmentCharset ) {
-		// Lets build the line break
-		let codeLineBreak = "<<" + "{{" + midChar+midChar + "}}" + ">>";
-		// And check that it does not exists
-		if( data.indexOf(codeLineBreak) < 0 ) {
-			return codeLineBreak
+	// Markdown code fence failed, let's find a more complicated version
+	for (const midChar of midSegmentCharset) {
+		// Build the line break with unique characters
+		let codeLineBreak = `<<{{${midChar.repeat(2)}}}>>`;
+		// Check that it does not exist in the data
+		if (!data.includes(codeLineBreak)) {
+			return codeLineBreak;
 		}
 	}
 	
-	// All search has failed, ABORT !
-	throw "Unable to find valid 'block wrap line', exhausted all options";
-}
+	// All searches have failed, throw an error
+	throw new Error("Unable to find valid 'block wrap line', exhausted all options");
+};
