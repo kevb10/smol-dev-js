@@ -21,13 +21,12 @@ module.exports = async function getChatCompletion(messages, promptOpts = {}, str
 		model = "claude-2"
 		promptOpts.total_tokens = 120 * 1000;
 	} else {
-		if (model == "gpt-4" || model == "smart") {
-			// if (config.gpt4_32k) {
-			// 	model = "gpt-4-32k";
-			// }
-			model = "gpt-4-1106-preview"
-		}
-		promptOpts.total_tokens = 4 * 1000;
+		// default to this model
+		model = "gpt-4-1106-preview"
+		// forcing this to null so we can auto-calculate it later on
+		promptOpts.max_tokens = null;
+		// do not set the following as it makes no sense for openai with all the different token limits
+		// promptOpts.total_tokens = 120 * 1000;
 	}
 
 	// Override the config
